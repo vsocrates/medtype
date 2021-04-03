@@ -39,3 +39,5 @@ med_linkers/
 
 # Vim swap files
 *.swp
+
+medtype-as-service/server/build/*
