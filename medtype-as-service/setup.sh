@@ -54,8 +54,8 @@ then
 	rm -f resources/umls2type.zip
 fi 
 
-echo -e "${BOLD} MedType> Installing Server and Client Packages ${DEFAULT}"
-cd server
-python setup.py clean
-python setup.py install
+# echo -e "${BOLD} MedType> Installing Server and Client Packages ${DEFAULT}"
+# cd server
+# python setup.py clean
+# python setup.py install
 
