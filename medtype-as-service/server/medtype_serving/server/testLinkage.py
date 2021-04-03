@@ -30,9 +30,9 @@ group1.add_argument('--type2id_json', 		type=str, 	required=True, 			help='Json 
 group1.add_argument('--umls2type_file', 	type=str, 	required=True, 			help='Location where UMLS to semantic types mapping is stored')
 
 # Entity Linkers Arguments
-# group1.add_argument('--quickumls_path',		type=str, 	default=None, 			help='Location where QuickUMLS is installed')
-# group1.add_argument('--metamap_path', 		type=str, 	default=None, 			help='Location where MetaMap executable is installed, e.g .../public_mm/bin/metamap18')
-# group1.add_argument('--metamaplite_path', 	type=str, 	default=None, 			help='Location where MetaMapLite is installed, e.g .../public_mm_lite')
+group1.add_argument('--quickumls_path',		type=str, 	default=None, 			help='Location where QuickUMLS is installed')
+group1.add_argument('--metamap_path', 		type=str, 	default=None, 			help='Location where MetaMap executable is installed, e.g .../public_mm/bin/metamap18')
+group1.add_argument('--metamaplite_path', 	type=str, 	default=None, 			help='Location where MetaMapLite is installed, e.g .../public_mm_lite')
 
 parser.add_argument('--verbose', 		action='store_true', 	default=False, 	help='turn on tensorflow logging for debug')
 
