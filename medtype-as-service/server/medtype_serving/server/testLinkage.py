@@ -50,11 +50,11 @@ test_texts = [
 ]
 
 message = {
-    "entity_linker" : "scispacy",
+    "entity_linker" : args.entity_linker,
     "text" : test_texts
 }
 
 filtered = medtype.run(message)
 
-with open('./filtered_candidates.json', 'w') as outfile:
+with open('./filtered_candidates_' + args.entity_linker + '.json', 'w') as outfile:
     json.dump(filtered, outfile)
