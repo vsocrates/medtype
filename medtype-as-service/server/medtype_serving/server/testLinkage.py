@@ -1,4 +1,5 @@
 import argparse
+import json
 
 from entity_linkers import * 
 from MedTypeServerEdits import *
@@ -54,4 +55,6 @@ message = {
 }
 
 filtered = medtype.run(message)
-print(filtered)
+
+with open('./filtered_candidates.json', 'w') as outfile:
+    json.dump(filtered, outfile)
