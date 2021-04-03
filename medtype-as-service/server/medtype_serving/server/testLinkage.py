@@ -48,5 +48,10 @@ test_texts = [
     "Patient was reportedly intubated for unclear reasons and transferred to [**Hospital1 19**] on [**2111-4-14**] for further management. Imaging here did not reveal hemorrhage. Altered mental status was thought [**3-17**] UTI c/w enteroccocus. Patient was extubated on [**2111-4-15**]."
 ]
 
-filtered = medtype.run(test_texts)
+message = {
+    "entity_linker" : "scispacy",
+    "text" : test_texts
+}
+
+filtered = medtype.run(message)
 print(filtered)
