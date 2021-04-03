@@ -1,6 +1,6 @@
 from multiprocessing import Process, Event
-from termcolor import colored
-from .helper import set_logger, check_file
+# from termcolor import colored
+from helper import set_logger, check_file
 
 
 class MedTypeHTTPProxy(Process):

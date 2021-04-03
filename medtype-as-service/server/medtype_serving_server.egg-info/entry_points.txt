@@ -1,0 +1,5 @@
+[console_scripts]
+medtype-serving-benchmark = medtype_serving.server.cli:benchmark
+medtype-serving-start = medtype_serving.server.cli:main
+medtype-serving-terminate = medtype_serving.server.cli:terminate
+

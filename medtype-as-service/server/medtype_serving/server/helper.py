@@ -2,9 +2,7 @@ import argparse, pickle, logging, os, sys, time, uuid, warnings, itertools, path
 from collections import OrderedDict
 from collections import defaultdict as ddict
 
-import zmq
-from termcolor import colored
-from zmq.utils import jsonapi
+# from termcolor import colored
 
 __all__ = ['set_logger', 'get_args_parser', 'auto_bind', 'mergeList', 'clean_text', 'replace', 'check_file', 'TimeContext', 'CappedHistogram']
 
@@ -176,7 +174,7 @@ class TimeContext:
 
 	def __exit__(self, typ, value, traceback):
 		self.duration = time.perf_counter() - self.start
-		print(colored('    [%3.3f secs]' % self.duration, 'green'), flush=True)
+		# print(colored('    [%3.3f secs]' % self.duration, 'green'), flush=True)
 
 class CappedHistogram:
 	"""Space capped dict with aggregate stat tracking.

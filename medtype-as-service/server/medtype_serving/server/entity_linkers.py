@@ -1,9 +1,18 @@
 from collections import defaultdict as ddict
-import re, requests
-from .helper import *
+import re
+from helper import *
 
 class BaseLinker:
+	'''
+	It takes in a mention list and text
+	
+	Args:
+		men_list : list with keys with shape (start, end) and values with shape [cands]  
+		text : raw text
 
+	Returns: 
+		out : dict with text and mentions for one entry
+	'''
 	def reformat(self, men_list, text):
 		out = {
 			'text'	   : text,
@@ -30,9 +39,9 @@ class ScispaCy(BaseLinker):
 		from scispacy.umls_linking import UmlsEntityLinker
 
 		self.nlp = spacy.load("en_core_sci_sm")
-		self.nlp.add_pipe(AbbreviationDetector(self.nlp))	# Add abbreviation deteciton module
+		self.nlp.add_pipe("abbreviation_detector")	# Add abbreviation deteciton module
 		linker 	= UmlsEntityLinker(resolve_abbreviations=True) 	# Add Entity linking module
-		self.nlp.add_pipe(linker)
+		self.nlp.add_pipe("scispacy_linker", config={"resolve_abbreviations": True, "linker_name": "umls"})
 
 	def __call__(self, text):
 		sci_res	 = self.nlp(text)
@@ -69,42 +78,6 @@ class QUMLS(BaseLinker):
 
 		return self.reformat(men_list, text)
 
-######################### cTAKES
-
-class CTakes(BaseLinker):
-
-	def __init__(self, args):
-		# The ctakes server is running with the following command in $CTAKES_HOME/ctakes_server
-		# java -Dctakes.umlsuser=XXXX -Dctakes.umlspw=XXXX -Xmx5g -cp -target/ctakes-server-0.1.jar:resources/ de.dfki.lt.ctakes.Server localhost 9898 desc/ctakes-clinical-pipeline/desc/analysis_engine/AggregatePlaintextUMLSProcessor.xml
-		self.ctakes_url  = 'http://{}:{}/ctakes'.format(args.ctakes_host, args.ctakes_port)
-		assert args.num_worker == 1, "cTakes doesn't support num_workers > 1"
-
-	def __call__(self, text):
-		import requests
-		try:
-			text = clean_text(text)
-			res  = requests.get(self.ctakes_url, params={"text": text});
-
-			res_list = ddict(set)
-			if res.status_code == 200:
-				data = res.json()
-				for dat in data:
-					if 'ontologyConceptArr' in dat['annotation'] and not dat['annotation']['ontologyConceptArr'] is None:
-						start = dat['annotation']['begin']
-						end   = dat['annotation']['end']
-						for cands in dat['annotation']['ontologyConceptArr']:
-							umls_cui = cands['annotation']['cui']
-							score    = cands['annotation']['score']			# 0.0 as lookup
-							res_list[(start, end)].add((umls_cui, round(score, 3)))
-				
-				res_list = {k: list(v) for k, v in res_list.items()}
-				return self.reformat(res_list, text)
-
-		except Exception as e:
-			print('\nException in cTakes: {}'.format(e.args[0]))
-
-
-		return self.reformat({}, text)
 
 
 ######################### MetaMap

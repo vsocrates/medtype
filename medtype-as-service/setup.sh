@@ -59,8 +59,3 @@ cd server
 python setup.py clean
 python setup.py install
 
-cd ../client
-python setup.py clean
-python setup.py install
-
-echo -e "${BOLD} MedType> All Set! ${DEFAULT}"
