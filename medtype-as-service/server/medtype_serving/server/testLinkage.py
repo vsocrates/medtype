@@ -43,10 +43,10 @@ medtype = MedTypeWorkers(args)
 
 
 test_texts = [
-    "Tuberculosis (TB) is an infectious disease usually caused by Mycobacterium tuberculosis (MTB) bacteria.",
-    "Peripheral Vascular: (Right radial pulse: Not assessed), (Left radial pulse: Not assessed), (Right DP pulse: Not assessed), (Left DP pulse: Not assessed) Respiratory / Chest: (Breath Sounds: Clear : ) Abdominal: Soft, Non-tender, Bowel sounds present Extremities: Right: Absent, Left: Absent",
-    "Communication: Patient discussed on interdisciplinary rounds. Discussed in detail with Dr. [**Last Name (STitle) **], with vascular access team, and with blood bank team.",
-    "Patient was reportedly intubated for unclear reasons and transferred to [**Hospital1 19**] on [**2111-4-14**] for further management. Imaging here did not reveal hemorrhage. Altered mental status was thought [**3-17**] UTI c/w enteroccocus. Patient was extubated on [**2111-4-15**]."
+#     "Tuberculosis (TB) is an infectious disease usually caused by Mycobacterium tuberculosis (MTB) bacteria.",
+     "Peripheral Vascular: (Right radial pulse: Not assessed), (Left radial pulse: Not assessed), (Right DP pulse: Not assessed), (Left DP pulse: Not assessed) Respiratory / Chest: (Breath Sounds: Clear : ) Abdominal: Soft, Non-tender, Bowel sounds present Extremities: Right: Absent, Left: Absent",
+#     "Communication: Patient discussed on interdisciplinary rounds. Discussed in detail with Dr. [**Last Name (STitle) **], with vascular access team, and with blood bank team.",
+ #    "Patient was reportedly intubated for unclear reasons and transferred to [**Hospital1 19**] on [**2111-4-14**] for further management. Imaging here did not reveal hemorrhage. Altered mental status was thought [**3-17**] UTI c/w enteroccocus. Patient was extubated on [**2111-4-15**]."
 ]
 
 message = {

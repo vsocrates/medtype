@@ -90,7 +90,8 @@ class Metamap(BaseLinker):
 	def __call__(self, text):
 		text = clean_text(text)
 		concepts, error  = self.model.extract_concepts([text], [1])
-
+		print(concepts)
+		print(error)
 		res_list = ddict(list)
 		for k, concept in enumerate(concepts):
 			if concept[1] !='MMI': continue
