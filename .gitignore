@@ -44,5 +44,4 @@ medtype-as-service/server/build/*
 
 
 # output files from testLinkage.py
-/home/vs428/Documents/entity_linking/medtype/medtype-as-service/server/medtype_serving/server/*.json
-
+medtype-as-service/server/medtype_serving/server/*.json
