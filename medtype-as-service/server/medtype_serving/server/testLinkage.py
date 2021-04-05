@@ -39,6 +39,18 @@ parser.add_argument('--verbose', 		action='store_true', 	default=False, 	help='t
 args = parser.parse_args()
 
 
+# --model_path ../../../resources/pretrained_models/ehr_model.bin   --type_remap_json ../../../../config/type_remap.json  --type2id_json ../../../../config/type2id.json  --umls2type_file ../../../resources/umls2type.pkl --entity_linker metamap --metamap_path /home/vs428/project/Metamap/public_mm16/bin/metamap16
+
+
+args.model_path = ""
+args.metamap_path = ""
+args.remap_json = ""
+args.type_remap = ""
+args.type2id_json = ""
+args.umls2type_file = ""
+args.entity_linker = ""
+
+
 medtype = MedTypeWorkers(args)
 
 
