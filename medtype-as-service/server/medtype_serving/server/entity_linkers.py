@@ -38,7 +38,7 @@ class ScispaCy(BaseLinker):
 		from scispacy.abbreviation import AbbreviationDetector
 		from scispacy.umls_linking import UmlsEntityLinker
 
-		self.nlp = spacy.load("en_core_sci_sm")
+		self.nlp = spacy.load("en_core_sci_scibert")
 		self.nlp.add_pipe("abbreviation_detector")	# Add abbreviation deteciton module
 		self.nlp.add_pipe("scispacy_linker", config={"resolve_abbreviations": True, "linker_name": "umls"}) # Add Entity linking module
 
