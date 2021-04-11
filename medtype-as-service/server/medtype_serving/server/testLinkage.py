@@ -5,51 +5,52 @@ from entity_linkers import *
 from MedTypeServerEdits import *
 from helper import check_max_seq_len
 
-parser = argparse.ArgumentParser(description='Start a MedTypeServer for serving')
-
-group2 = parser.add_argument_group('MedType Parameters', 'config how MedType model and pooling works')
-group2.add_argument('-max_seq_len', 		type=check_max_seq_len, default=25, help='maximum length of a sequence, longer sequence will be trimmed on the right side. '
-                                                'set it to NONE for dynamically using the longest sequence in a (mini)batch.')
-group2.add_argument('-cased_tokenization', 	dest='do_lower_case', 	action='store_false', default=True, help='Whether tokenizer should skip the default lowercasing and accent removal.'
-                                                        'Should be used for e.g. the multilingual cased pretrained MedType model.')
-
-
-group1 = parser.add_argument_group('File Paths', 'config the path, checkpoint and filename of a pretrained/fine-tuned MedType model')
-group1.add_argument('--model_path', 		type=str, 	required=True, 			help='directory of a pretrained MedType model')
-group1.add_argument('--model_type', 		type=str, 	default='bert_combined', 	help='Model type. Options: [bert_combined (Bio arcticles/EHR), bert_plain (General)]')
-group1.add_argument('--entity_linker', 		type=str, 	default='scispacy',		help='entity linker to use over which MedType is employed. Options: \
-                                                    [scispacy, qumls, ctakes, metamap, metamaplite]')
-group1.add_argument('--dropout', 		type=float, 	default=0.1, 			help='Dropout in MedType Model.')
-
-group1.add_argument('--tokenizer_model', 	type=str, 	default='bert-base-cased',	help='tokenizer to use')
-group1.add_argument('--context_len', 		type=int, 	default=120,			help='Number of tokens to consider in context for predicting mention semantic type')
-group1.add_argument('--model_batch_size', 	type=int, 	default=256, 			help='maximum number of mentions handled by MedType model')
-group1.add_argument('--threshold', 		type=float, 	default=0.5, 			help='Threshold used on logits from MedType')
-group1.add_argument('--type_remap_json', 	type=str, 	required=True, 			help='Json file containing semantic type remapping to coarse-grained types')
-group1.add_argument('--type2id_json', 		type=str, 	required=True, 			help='Json file containing semantic type to identifier mapping')
-group1.add_argument('--umls2type_file', 	type=str, 	required=True, 			help='Location where UMLS to semantic types mapping is stored')
-
-# Entity Linkers Arguments
-group1.add_argument('--quickumls_path',		type=str, 	default=None, 			help='Location where QuickUMLS is installed')
-group1.add_argument('--metamap_path', 		type=str, 	default=None, 			help='Location where MetaMap executable is installed, e.g .../public_mm/bin/metamap18')
-group1.add_argument('--metamaplite_path', 	type=str, 	default=None, 			help='Location where MetaMapLite is installed, e.g .../public_mm_lite')
-
-parser.add_argument('--verbose', 		action='store_true', 	default=False, 	help='turn on tensorflow logging for debug')
-
-args = parser.parse_args()
 
 
 # --model_path ../../../resources/pretrained_models/ehr_model.bin   --type_remap_json ../../../../config/type_remap.json  --type2id_json ../../../../config/type2id.json  --umls2type_file ../../../resources/umls2type.pkl --entity_linker metamap --metamap_path /home/vs428/project/Metamap/public_mm16/bin/metamap16
 
 
-args.model_path = ""
-args.metamap_path = ""
-args.remap_json = ""
-args.type_remap = ""
-args.type2id_json = ""
-args.umls2type_file = ""
-args.entity_linker = ""
 
+model_path = ""
+metamap_path = ""
+type_remap_json = ""
+type2id_json = ""
+umls2type_file = ""
+entity_linker = ""
+
+
+parser = argparse.ArgumentParser(description='Start a MedTypeServer for serving')
+
+group2 = parser.add_argument_group('MedType Parameters', 'config how MedType model and pooling works')
+group2.add_argument('-max_seq_len', type=check_max_seq_len, default=25, help='maximum length of a sequence, longer sequence will be trimmed on the right side. '
+                                                'set it to NONE for dynamically using the longest sequence in a (mini)batch.')
+group2.add_argument('-cased_tokenization', dest='do_lower_case', action='store_false', default=True, help='Whether tokenizer should skip the default lowercasing and accent removal.'
+                                                        'Should be used for e.g. the multilingual cased pretrained MedType model.')
+
+
+group1 = parser.add_argument_group('File Paths', 'config the path, checkpoint and filename of a pretrained/fine-tuned MedType model')
+group1.add_argument('--model_path', type=str, default=model_path, required=True, help='directory of a pretrained MedType model')
+group1.add_argument('--model_type', type=str, default='bert_combined', help='Model type. Options: [bert_combined (Bio arcticles/EHR), bert_plain (General)]')
+group1.add_argument('--entity_linker', type=str, default='scispacy',  help='entity linker to use over which MedType is employed. Options: \
+                                                    [scispacy, qumls, ctakes, metamap, metamaplite]')
+group1.add_argument('--dropout', type=float, default=0.1, help='Dropout in MedType Model.')
+
+group1.add_argument('--tokenizer_model',    type=str, default='bert-base-cased', help='tokenizer to use')
+group1.add_argument('--context_len', type=int, default=120,   help='Number of tokens to consider in context for predicting mention semantic type')
+group1.add_argument('--model_batch_size', type=int, default=256, help='maximum number of mentions handled by MedType model')
+group1.add_argument('--threshold', type=float, default=0.5, help='Threshold used on logits from MedType')
+group1.add_argument('--type_remap_json', default=type_remap_json, type=str, required=True, help='Json file containing semantic type remapping to coarse-grained types')
+group1.add_argument('--type2id_json', default=type2id_json, type=str, required=True, help='Json file containing semantic type to identifier mapping')
+group1.add_argument('--umls2type_file', default=umls2type_file, type=str, required=True, help='Location where UMLS to semantic types mapping is stored')
+
+# Entity Linkers Arguments
+group1.add_argument('--quickumls_path',  type=str, default=None, help='Location where QuickUMLS is installed')
+group1.add_argument('--metamap_path', default=metamap_path if metamap_path else None, type=str, help='Location where MetaMap executable is installed, e.g .../public_mm/bin/metamap18')
+group1.add_argument('--metamaplite_path', type=str, default=None, help='Location where MetaMapLite is installed, e.g .../public_mm_lite')
+
+parser.add_argument('--verbose', action='store_true', default=False, help='turn on tensorflow logging for debug')
+
+args = parser.parse_args()
 
 medtype = MedTypeWorkers(args)
 
