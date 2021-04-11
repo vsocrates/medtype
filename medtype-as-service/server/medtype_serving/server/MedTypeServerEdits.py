@@ -33,7 +33,7 @@ class ServerCmd:
 	def is_valid(cmd):
 		return any(not k.startswith('__') and v == cmd for k, v in vars(ServerCmd).items())
 
-class MedTypeWorkers(Process):
+class MedType(Process):
 
 	def __init__(self, args):
 		super().__init__()
